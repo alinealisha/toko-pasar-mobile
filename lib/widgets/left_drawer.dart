@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:toko_pasar_mobile/screens/list_productentry.dart';
 import 'package:toko_pasar_mobile/screens/menu.dart';
 import 'package:toko_pasar_mobile/screens/productentry_form.dart';
 
@@ -61,6 +62,17 @@ class LeftDrawer extends StatelessWidget {
                     builder: (context) => const ProductEntryFormPage(),
                   ));
             },
+          ),
+          ListTile(
+              leading: const Icon(Icons.production_quantity_limits_rounded),
+              title: const Text('Daftar Product'),
+              onTap: () {
+                  // Route menu ke halaman Product
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProductEntryPage()),
+                  );
+              },
           ),
         ],
       ),
