@@ -240,5 +240,100 @@ Sementara itu, ketika halaman baru ditampilkan, pengguna bisa kembali ke halaman
    ```dart
    Navigator.pop(context);
    ```
-  
+
+# Tugas 9
+## Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+
+Membuat model untuk data JSON dapat membantu dalam mempermudah manipulasi, validasi, dan pengelolaan data yang diterima atau dikirimkan. Model juga memastikan data sesuai dengan struktur yang diharapkan sehingga mengurangi risiko error akibat format data yang tidak sesuai. Jika model tidak dibuat, memang tidak secara langsung akan terjadi error, tetapi pengelolaan data menjadi lebih rawan error dan sulit untuk di-debug karena data akan dikelola secara manual tanpa validasi atau struktur yang jelas.
+
+## Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini
+
+ Library http digunakan untuk melakukan komunikasi dengan server melalui protokol HTTP. Fungsi utamanya meliputi pengambilan data (GET), pengiriman data (POST), serta pengelolaan respons dari server. Library ini mempermudah integrasi antara Flutter dan backend seperti Django dalam pertukaran data.
+
+## Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+
+CookieRequest digunakan untuk mengelola sesi autentikasi antara klien dan server dengan cara menyimpan dan mengelola cookie. Instance CookieRequest perlu dibagikan ke semua komponen Flutter untuk memastikan sesi tetap konsisten di seluruh aplikasi, yang memungkinkan komponen lain mengakses data sesi, seperti token autentikasi, tanpa perlu login ulang.
+
+## Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+
+1. Input
+
+   Data dimasukkan melalui form atau widget input pada Flutter.
+
+2. Pengiriman
+
+   Data tersebut dikirimkan menggunakan metode POST melalui library http   atau CookieRequest ke endpoint Django.
+
+3. Proses Server
+
+   Django memproses data, menyimpannya dalam database, lalu memberikan  respons JSON.
+
+4. Penerimaan Data
+
+   Flutter menerima respons JSON, memetakan data tersebut ke dalam model, dan menampilkan data pada UI menggunakan widget seperti ListView atau GridView.
+   
+## Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+1. Login
+   
+   - Data akun (email/username dan password) dimasukkan melalui Flutter.
+   - Flutter mengirim data ke endpoint Django menggunakan metode POST.
+   - Django memverifikasi kredensial terhadap database dan, jika valid, mengembalikan token atau cookie sesi.
+   - Flutter menyimpan token/cookie dan menampilkan menu atau halaman utama.
+
+3. Register
+   
+   - Data pendaftaran dimasukkan di Flutter dan dikirimkan ke endpoint Django.
+   - Django menyimpan data pengguna baru ke database, lalu mengembalikan respons sukses.
+
+4. Logout
+   
+   - Flutter mengirim permintaan logout ke endpoint Django.
+   - Django menghapus sesi atau token yang terkait, lalu mengembalikan respons sukses.
+   - Flutter menghapus token/cookie lokal dan mengarahkan pengguna kembali ke halaman login
+
+
+## Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
+
+1. Buat aplikasi Django dengan nama `authentication` dan tambahkan ke bagian `INSTALLED_APPS` yang ada di settings.py proyek utama Toko Pasar.
+2. Install Library `django-cors-headers`, lalu tambahkan juga ke bagian `INSTALLED_APPS` dan middleware di `MIDDLEWARE` dalam file settings.py.
+3. Tambahkan pengaturan CORS di `settings.py` untuk mendukung session lintas platform.
+4. Tambahkan `10.0.2.2` ke bagian `ALLOWED_HOSTS` untuk mengakses emulator Android.
+5. Tambahkan fungsi login di dalam `views.py` pada aplikasi `authentication`.
+6. Tambahkan fungsi register di dalam `views.py` pada aplikasi `authentication` untuk pendaftaran pengguna baru.
+7. Buat file `urls.py` di dalam folder `authentication` dan tambahkan routing untuk `/login` dan `/register`.
+8. Hubungkan `/auth` di `urls.py` proyek utama untuk menyambungkan endpoint.
+9.  Instal library `provider` dan `pbp_django_auth` untuk menangani autentikasi.
+10.  Tambahkan `CookieRequest` sebagai provider di root widget (`main.dart`).  
+11. Buat halaman login dengan form untuk username dan password, kirim data ke endpoint login menggunakan `CookieRequest`.
+12. Buat halaman register dengan form untuk username, password, dan konfirmasi password, kirim data ke endpoint register menggunakan `CookieRequest`.
+13. Salin data JSON dari endpoint Django ke situs Quicktype dan atur bahasa ke Dart.
+14. Buat folder `models/` di direktori `lib/` Flutter dan tambahkan file `product_entry.dart`.  
+15. Tempelkan kode model Dart dari Quicktype ke dalam file tersebut.
+16. Install package `http` dengan perintah `flutter pub add http`.
+17. Tambahkan izin akses internet di file `AndroidManifest.xml`.
+18. Buat halaman baru `list_productentry.dart` untuk menampilkan daftar produk.
+19. Gunakan `FutureBuilder` untuk mengambil data dari endpoint Django menggunakan metode GET.
+20. Tambahkan navigasi ke halaman daftar produk pada menu dengan `ListTile`.
+21. Hubungkan tombol "Lihat Produk" ke halaman daftar produk di aplikasi Flutter.
+22. Tambahkan fungsi `create_product_flutter` di `main/views.py` untuk menerima data POST dari Flutter dan menyimpan data di database.
+23. Tambahkan routing untuk endpoint baru `create-flutter/` di `main/urls.py`.
+24. Integrasikan `CookieRequest` ke file `productentry_form.dart`.
+25. Modifikasi tombol submit untuk mengirim data JSON ke endpoint Django menggunakan metode POST.
+26. Jalankan ulang aplikasi Flutter dan periksa apakah data berhasil ditambahkan ke database Django.
+27. Tambahkan fungsi logout di `authentication/views.py` untuk menghapus session pengguna.
+28. Tambahkan routing untuk endpoint logout di `authentication/urls.py`.
+29. Lakukan add-commit-push ke Github. 
+
+
+
+
+
+
+
+
+
+
+
+
 
